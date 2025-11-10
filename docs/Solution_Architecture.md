@@ -1,7 +1,6 @@
 # IndoorApp Architecture (Dark-Mode Friendly)
 
-This single file is copy‑paste ready for `architecture.md`. It uses Mermaid's **dark theme** + **transparent backgrounds** so connectors look clean on GitHub dark mode.
-
+This document captures the entire technical landscape of IndoorApp, from its current on-prem setup to the cloud-ready simulated architecture with blue/green deployments.
 ---
 
 ## 1. As-Is Architecture — The On-Prem Castle 🏰
