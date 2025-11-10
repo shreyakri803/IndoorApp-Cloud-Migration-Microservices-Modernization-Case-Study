@@ -1,15 +1,19 @@
-# IndoorApp Architecture
+# IndoorApp Architecture (Dark-Mode Friendly)
 
-IndoorApp is a story about a small on-prem monolith that grows wings and learns to fly in a locally simulated cloud.
-This document shows every chapter — from old-world castles to blue-green skylines.
+This single file is copy‑paste ready for `architecture.md`. It uses Mermaid's **dark theme** + **transparent backgrounds** so connectors look clean on GitHub dark mode.
 
 ---
 
-# 1. As-Is Architecture — The On-Prem Castle 🏰
+## 1. As-Is Architecture — The On-Prem Castle 🏰
 
 ```mermaid
+%%{init: {"theme":"dark","themeVariables":{
+  "background":"transparent",
+  "primaryColor":"#0B1221","primaryBorderColor":"#8BA3BE","primaryTextColor":"#E5E7EB",
+  "secondaryColor":"#111827","secondaryBorderColor":"#64748B","tertiaryColor":"#1F2937",
+  "lineColor":"#9CA3AF","edgeLabelBackground":"#111827"
+}} }%%
 flowchart LR
-
   U["👥 End Users (Employees / HR)"]
   W["🧱 IndoorApp Monolith (IIS / Apache)"]
   DB[("🗄️ On-Prem DB Server")]
@@ -28,24 +32,26 @@ flowchart LR
     AD
   end
 
-  classDef svc fill:#EAF2FF,stroke:#3B82F6,stroke-width:1.5px,color:#1E3A8A;
-  classDef data fill:#FFF3D6,stroke:#D97706,stroke-width:1.5px,color:#7C2D12;
-  classDef idp fill:#FCE7F3,stroke:#DB2777,stroke-width:1.5px,color:#831843;
+  classDef svc fill:#0F172A,stroke:#60A5FA,stroke-width:1.6px,color:#E5E7EB;
+  classDef data fill:#1F2937,stroke:#F59E0B,stroke-width:1.6px,color:#FDE68A;
+  classDef idp fill:#1F2937,stroke:#F472B6,stroke-width:1.6px,color:#FBCFE8;
 
   class W svc;
   class DB,FS data;
   class AD idp;
 
-  style OnPremDC fill:#F8FAFC,stroke:#94A3B8,stroke-width:1.5px
+  style OnPremDC fill:#0B1221,stroke:#64748B,stroke-width:1.2px,rx:8px,ry:8px;
 ```
 
 ---
 
-# 2. To-Be Architecture — Cloud Simulation City 🌆
+## 2. To-Be Architecture — Cloud Simulation City 🌆
 
 ```mermaid
+%%{init: {"theme":"dark","themeVariables":{
+  "background":"transparent","lineColor":"#A3A3A3","edgeLabelBackground":"#0B1221"
+}} }%%
 flowchart TB
-
   subgraph Client["👤 Client"]
     U[User]
   end
@@ -87,11 +93,11 @@ flowchart TB
   REG --> Ablue
   REG --> Agreen
 
-  classDef blue fill:#DBEAFE,stroke:#1D4ED8,color:#1E3A8A,stroke-width:2px;
-  classDef green fill:#DCFCE7,stroke:#15803D,color:#14532D,stroke-width:2px;
-  classDef store fill:#FFEAF5,stroke:#BE185D,color:#831843,stroke-width:2px;
-  classDef queue fill:#EDE9FE,stroke:#7C3AED,color:#4C1D95,stroke-width:2px;
-  classDef infra fill:#F1F5F9,stroke:#475569,color:#1E293B,stroke-width:1.5px;
+  classDef blue fill:#0B1221,stroke:#60A5FA,color:#E5E7EB,stroke-width:2px;
+  classDef green fill:#0B1221,stroke:#34D399,color:#E5E7EB,stroke-width:2px;
+  classDef store fill:#0B1221,stroke:#F472B6,color:#E5E7EB,stroke-width:2px;
+  classDef queue fill:#0B1221,stroke:#A78BFA,color:#E5E7EB,stroke-width:2px;
+  classDef infra fill:#0B1221,stroke:#94A3B8,color:#E5E7EB,stroke-width:1.6px;
 
   class Ablue,AblAPI blue;
   class Agreen,AgrAPI green;
@@ -102,11 +108,11 @@ flowchart TB
 
 ---
 
-# 3. Deployment View — Local Mini-Cloud Blueprint 🗺️
+## 3. Deployment View — Local Mini-Cloud Blueprint 🗺️
 
 ```mermaid
+%%{init: {"theme":"dark","themeVariables":{"background":"transparent","lineColor":"#9CA3AF"}} }%%
 graph TD
-
   subgraph Laptop["💻 Dev / PM Laptop"]
     VS["VS Code + Docker Desktop"]
     LS["LocalStack"]
@@ -127,16 +133,15 @@ graph TD
   REG --> API_B
   REG --> WEB_G
   REG --> API_G
-
   API_B --> LS
   API_G --> AZ
   API_B --> PG
   API_G --> PG
 
-  classDef runtime fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1.5px;
-  classDef blue fill:#DBEAFE,stroke:#1D4ED8,stroke-width:2px;
-  classDef green fill:#DCFCE7,stroke:#15803D,stroke-width:2px;
-  classDef db fill:#FFF3D6,stroke:#D97706,stroke-width:2px;
+  classDef runtime fill:#0B1221,stroke:#64748B,stroke-width:1.2px;
+  classDef blue fill:#0B1221,stroke:#60A5FA,stroke-width:2px;
+  classDef green fill:#0B1221,stroke:#34D399,stroke-width:2px;
+  classDef db fill:#0B1221,stroke:#F59E0B,stroke-width:2px;
 
   class WEB_B,API_B blue;
   class WEB_G,API_G green;
@@ -146,9 +151,10 @@ graph TD
 
 ---
 
-# 4. Sequence: Book a Room — A Tiny Journey 🚶‍♂️🏨
+## 4. Sequence: Book a Room — A Tiny Journey 🚶‍♂️🏨
 
 ```mermaid
+%%{init: {"theme":"dark","themeVariables":{"background":"transparent","lineColor":"#9CA3AF","actorLineColor":"#9CA3AF","signalColor":"#CBD5E1"}} }%%
 sequenceDiagram
   autonumber
   participant User
@@ -170,11 +176,11 @@ sequenceDiagram
 
 ---
 
-# 5. Data Flow — IndoorApp
+## 5. Data Flow — IndoorApp
 
 ```mermaid
+%%{init: {"theme":"dark","themeVariables":{"background":"transparent","lineColor":"#9CA3AF"}} }%%
 flowchart LR
-
   U["👤 User"]
   WEB["🌐 Web UI"]
   API["🔧 API Service"]
@@ -189,11 +195,11 @@ flowchart LR
   API -->|Emit events| Q
   Q --> W
 
-  classDef user fill:#DBEAFE,stroke:#2563EB,stroke-width:2px,color:#1E3A8A;
-  classDef api fill:#F3E8FF,stroke:#8B5CF6,stroke-width:2px,color:#5B21B6;
-  classDef db fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#92400E;
-  classDef store fill:#FCE7F3,stroke:#DB2777,stroke-width:2px,color:#A11A50;
-  classDef queue fill:#EDE9FE,stroke:#7C3AED,stroke-width:2px,color:#4C1D95;
+  classDef user fill:#0B1221,stroke:#60A5FA,stroke-width:2px,color:#E5E7EB;
+  classDef api fill:#0B1221,stroke:#A78BFA,stroke-width:2px,color:#E5E7EB;
+  classDef db fill:#0B1221,stroke:#F59E0B,stroke-width:2px,color:#E5E7EB;
+  classDef store fill:#0B1221,stroke:#F472B6,stroke-width:2px,color:#E5E7EB;
+  classDef queue fill:#0B1221,stroke:#A78BFA,stroke-width:2px,color:#E5E7EB;
 
   class U user;
   class WEB,API api;
@@ -204,20 +210,11 @@ flowchart LR
 
 ---
 
-# 6. Notes & Legend 🗝️
-
-## Release Colors
-- 🟦 **Blue** = Current live service  
-- 🟩 **Green** = New version warming up  
-
-## Worlds
-- 🏰 **On-Prem** = The old kingdom  
-- 🌆 **Cloud Simulation** = The new skyline  
-
-## Visual Language
-- **Cylinders** = Databases  
-- **Purple** = Async messaging  
-- **Pink** = File/Object storage  
-
----
-
+## Legend 🗝️
+- 🟦 **Blue** = Current live service
+- 🟩 **Green** = New version warming up
+- 🏰 **On-Prem** = Old world
+- 🌆 **Cloud Simulation** = New world
+- **Cylinders** = Databases
+- **Purple** = Async messaging
+- **Pink** = File/Object storage
