@@ -1,4 +1,4 @@
-# IndoorApp Architecture (Dark-Mode Friendly)
+# IndoorApp Architecture
 
 This document captures the entire technical landscape of IndoorApp, from its current on-prem setup to the cloud-ready simulated architecture with blue/green deployments.
 ---
