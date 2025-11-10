@@ -157,3 +157,88 @@ flowchart LR
   Q --> ASYNC[Async Worker (future)]
 ```
 
+-------
+
+flowchart TB
+
+  subgraph Client
+    U[Web/Mobile Users]
+  end
+
+  %% Blue/Green Containers
+  subgraph BlueGreen[Blue/Green Services]
+    Ablue[Web: Nginx (Blue)]
+    AblAPI[API: Node/Python (Blue)]
+    Ablue --> AblAPI
+
+    Agreen[Web: Nginx (Green)]
+    AgrAPI[API: Node/Python (Green)]
+    Agreen --> AgrAPI
+  end
+
+  %% Backend Components
+  DB[(Postgres Container)]
+  S3[(S3 Storage - LocalStack)]
+  BLOB[(Azure Blob Storage - Azurite)]
+  MQ[SQS Queue - LocalStack]
+  NOTIF[SNS Topic - LocalStack]
+  REG[Local Docker Registry (ECR/ACR Simulation)]
+  CI[GitHub Actions CI/CD]
+  LOGS[(Central Logs - CloudWatch Simulation)]
+
+  %% User Routing
+  U -->|HTTPS| Ablue
+  U -->|Feature Flag Switch| Agreen
+
+  %% Blue/Green APIs → DB / Storage / Queue
+  AblAPI --> DB
+  AgrAPI --> DB
+
+  AblAPI --> S3
+  AgrAPI --> BLOB
+
+  AblAPI --> MQ
+  AgrAPI --> NOTIF
+
+  AblAPI -. logs .-> LOGS
+  AgrAPI -. logs .-> LOGS
+
+  CI --> REG
+  REG --> Ablue
+  REG --> Agreen
+
+---------
+
+## 3. Deployment View — Local Runtime + Emulators
+
+graph TD
+
+  subgraph DevLaptop[Developer/PM Laptop]
+    VS[VS Code + Docker Desktop]
+    LS[LocalStack AWS Emulator]
+    AZ[Azurite Azure Emulator]
+    REG[Local Docker Registry]
+  end
+
+  subgraph Runtime[Container Runtime]
+    WEB_B[Web (Blue)]
+    API_B[API (Blue)]
+    WEB_G[Web (Green)]
+    API_G[API (Green)]
+    PG[(Postgres Container)]
+  end
+
+  VS --> REG
+  REG --> WEB_B
+  REG --> API_B
+  REG --> WEB_G
+  REG --> API_G
+
+  API_B --> LS
+  API_G --> AZ
+
+  API_B --> PG
+  API_G --> PG
+
+---------
+
